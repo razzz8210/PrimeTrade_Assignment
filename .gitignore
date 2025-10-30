@@ -59,4 +59,3 @@ coverage/
 components.json
 postcss.config.mjs
 next.config.mjs
-tsconfig.json
