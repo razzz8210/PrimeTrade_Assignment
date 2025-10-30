@@ -10,7 +10,26 @@ dotenv.config()
 const app = express()
 
 // Middleware
-app.use(cors())
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'https://prime-trade-assignment.vercel.app',
+  'https://prime-trade-assignment-o5y1v61ij-raj-jaiswals-projects-8082d0da.vercel.app'
+]
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true)
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('vercel.app')) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true
+}))
 app.use(express.json())
 
 // MongoDB Connection
